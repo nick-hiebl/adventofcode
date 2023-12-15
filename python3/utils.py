@@ -7,6 +7,12 @@ def readFile():
 
   return lines
 
+def readFileName(name):
+  with open(name, 'r') as f:
+    lines = [l.strip() for l in f.readlines()]
+
+  return lines
+
 def enumerateGrid(grid):
   for r,row in enumerate(grid):
     for c,val in enumerate(row):
@@ -135,3 +141,18 @@ def grid_to_graph(grid, valid_move, allowDiag=True):
     [rc for _,rc,__ in enumerateGrid(grid)],
     lambda rc: [(rc2, 1) for _,rc2 in walkNeighbours(grid, *rc, allowDiag) if valid_move(rc, rc2)]
   )
+
+def detectCycle(initial, step, cycles):
+  seen = {}
+  seen[initial] = 0
+  s = initial
+  for i in range(1, cycles):
+    s = step(s)
+    if s in seen:
+      last = seen[s]
+      now = i
+      loop = now - last
+      for j in range((cycles - last) % loop):
+        s = step(s)
+      return s
+    seen[s] = i
