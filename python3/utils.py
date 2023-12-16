@@ -156,3 +156,6 @@ def detectCycle(initial, step, cycles):
         s = step(s)
       return s
     seen[s] = i
+
+def printGrid(grid, fn=str, rowConn = ''):
+  print('\n'.join(rowConn.join(fn(x) for x in row) for row in grid), '\n')
