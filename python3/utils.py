@@ -1,5 +1,6 @@
 import sys
 from collections import deque
+from queue import PriorityQueue
 
 def readFile():
   with open(sys.argv[1], 'r') as f:
@@ -34,9 +35,16 @@ def walkNeighbours(grid, r, c, allowDiag=True):
 def inGrid(grid, r, c):
   return 0 <= r and r < len(grid) and 0 <= c and c < len(grid[r])
 
+def ttimes(a, f):
+  return tuple(x*f for x in a)
+
 def tadd(a, b):
   assert len(a) == len(b)
   return tuple(x+y for x,y in zip(a,b))
+
+def tminus(a, b):
+  assert len(a) == len(b)
+  return tuple(x-y for x,y in zip(a,b))
 
 # Assumes lo is valid, hi is invalid
 def binarySearch(lo, hi, test_left):
@@ -111,6 +119,40 @@ def bfs(graph, start, is_finish_node):
 
   while path[-1] != start:
     path.append(from_map[path[-1]])
+  
+  return path[::-1]
+
+def weightedBfs(graph, start, is_finish_node):
+  from_map = {}
+  seen = set()
+  queue = PriorityQueue()
+  queue.put((0, start))
+  found_end = None
+
+  while not queue.empty():
+    dist,node = queue.get()
+
+    if node in seen:
+      continue
+    
+    seen.add(node)
+
+    if is_finish_node(node):
+      found_end = node
+      break
+    for neighbour,extraDist in graph[node]:
+      tot = dist + extraDist
+      if neighbour in from_map:
+        if from_map[neighbour][1] <= tot:
+          continue
+      from_map[neighbour] = (node, tot)
+      queue.put((tot, neighbour))
+    
+  assert found_end
+  path = [found_end]
+
+  while path[-1] != start:
+    path.append(from_map[path[-1]][0])
   
   return path[::-1]
 
