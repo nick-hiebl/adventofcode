@@ -14,7 +14,7 @@ for line in lines:
     for i,v in enumerate(data[:-1]):
       out.append(data[i+1] - data[i])
     return out
-  
+
   x = []
   x.append(reduce_data(nums))
   # print(x)
@@ -30,7 +30,7 @@ for line in lines:
     prev = v[0] - prev
 
   # print(prev)
-  
+
   total += prev
 print(highestorder)
 print(total)
