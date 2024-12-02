@@ -21,8 +21,9 @@ def main(raw, part):
 
     return total
   elif part == 2:
+    rs = counts_of_iterable(right)
     for a in left:
-      total += a * right.count(a)
+      total += a * rs[a]
     return total
 
 if __name__ == '__main__':
