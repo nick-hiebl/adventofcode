@@ -383,7 +383,7 @@ def flood_in_exactly2(graph2, start, steps, grid):
 def grid_to_graph(grid, valid_move, allowDiag=True):
   return graph_maker(
     [rc for _,rc,__ in enumerateGrid(grid)],
-    lambda rc: [(rc2, 1) for _,rc2 in walkNeighbours(grid, *rc, allowDiag) if valid_move(rc, rc2)]
+    lambda rc: [(rc2, 1) for _,rc2 in walkNeighbours(grid, *rc, allowDiag=allowDiag) if valid_move(rc, rc2)]
   )
 
 def wrapping_grid_to_graph(grid, check_chars, allowDiag):

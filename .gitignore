@@ -3,3 +3,5 @@ in.txt
 help.txt
 s2.txt
 test.txt
+**/*.pyc
+**/__pycache__
