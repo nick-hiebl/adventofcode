@@ -11,6 +11,7 @@ def create_python_directory():
   shutil.copyfile(ABSOLUTE_TOOLS_PATH + '/main.py', './main.py')
   open('r.txt', 'a').close()
   open('s.txt', 'a').close()
+  open('s2.txt', 'a').close()
 
 if __name__ == '__main__':
   if len(sys.argv) != 3:
