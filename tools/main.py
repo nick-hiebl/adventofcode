@@ -24,18 +24,7 @@ def main(raw, part):
     return total
 
 if __name__ == '__main__':
-  part1_sample = main(readFileName('s.txt'), 1)
-  print('Part 1 (sample):', part1_sample)
-  assert part1_sample == 0
-
-  part1_real = main(readFileName('r.txt'), 1)
-  print('Part 1 (real):', part1_real)
-  assert part1_real == 0
-
-  part2_sample = main(readFileName('s.txt'), 2)
-  print('Part 2 (sample):', part2_sample)
-  assert part2_sample == 0
-
-  part2_real = main(readFileName('r.txt'), 2)
-  print('Part 2 (real):', part2_real)
-  # assert part2_real == 0
+  test('p1 s1', 0, main(readFileName('s.txt'), 1))
+  test('p1 real', 0, main(readFileName('r.txt'), 1))
+  test('p2 s1', 0, main(readFileName('s.txt'), 2))
+  test('p2 real', 0, main(readFileName('r.txt'), 2))

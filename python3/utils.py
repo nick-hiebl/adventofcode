@@ -442,3 +442,11 @@ def caesar_char(c, step):
 
 def caesar_str(string, step):
   return ''.join(caesar_char(c, step) for c in string)
+
+def test(name, expected, actual):
+  if expected == actual:
+    print('PASS! {} got result: {}'.format(name, expected))
+  else:
+    print('FAIL! {} expected: {}, but got: {}'.format(name, expected, actual))
+    print()
+    assert expected == actual
