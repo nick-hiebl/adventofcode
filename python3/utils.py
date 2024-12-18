@@ -446,9 +446,9 @@ def caesar_str(string, step):
 
 def test(name, expected, actual):
   if expected == actual:
-    print('PASS! {} got result: {}'.format(name, expected))
+    print('PASS! [{}] got result: {}'.format(name, expected))
   else:
-    print('FAIL! {} expected: {}, but got: {}'.format(name, expected, actual))
+    print('FAIL! [{}] expected: {}, but got: {}'.format(name, expected, actual))
     print()
     assert expected == actual
 
