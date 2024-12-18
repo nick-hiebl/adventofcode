@@ -5,3 +5,5 @@ s2.txt
 test.txt
 **/*.pyc
 **/__pycache__
+
+y2024/day17/main2.py
