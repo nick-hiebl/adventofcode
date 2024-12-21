@@ -37,7 +37,7 @@ def verify(outpad, sequence):
 @cache
 def solve_for_x(outpad, sequence, pos):
   if len(sequence) == 0:
-    return (tuple(),)
+    return ('',)
   else:    
     nextp = find_pos(outpad, sequence[0])
 
@@ -62,20 +62,30 @@ def solve_for_x(outpad, sequence, pos):
         commands = ['v'] * abs(nextp[0] - pos[0]) + ['A']
         mycombs.append(commands)
     else:
-      horis = ['<' if nextp[1] < pos[1] else '>'] * abs(nextp[1] - pos[1])
-      verts = ['^' if nextp[0] < pos[0] else 'v'] * abs(nextp[0] - pos[0])
+      horis = ('<' if nextp[1] < pos[1] else '>') * abs(nextp[1] - pos[1])
+      verts = ('^' if nextp[0] < pos[0] else 'v') * abs(nextp[0] - pos[0])
 
-      if outpad[pos[0]][nextp[1]] != 'X':
-        mycombs.append(horis + verts + ['A'])
-      if outpad[nextp[0]][pos[1]] != 'X':
-        mycombs.append(verts + horis + ['A'])
+      if outpad == NUMPAD:
+        if outpad[pos[0]][nextp[1]] != 'X':
+          mycombs.append(horis + verts + 'A')
+        if outpad[nextp[0]][pos[1]] != 'X':
+          mycombs.append(verts + horis + 'A')
+      else:
+        if outpad[pos[0]][nextp[1]] == 'X':
+          mycombs.append(verts + horis + 'A')
+        elif outpad[nextp[0]][pos[1]] == 'X':
+          mycombs.append(horis + verts + 'A')
+        else:
+          mycombs.append(verts + horis + 'A')
+          # mycombs.append(horis + verts + 'A')
 
     output = []
     for combo in mycombs:
       for z in solve_for_x(outpad, sequence[1:], nextp):
-        output.append(tuple(tuple(combo) + z))
+        output.append(''.join(combo) + z)
     return tuple(output)
 
+@cache
 def get_shortest_n2(sequence, pads):
   assert len(pads) > 0
   start = find_pos(pads[0], 'A')
@@ -83,17 +93,24 @@ def get_shortest_n2(sequence, pads):
   for s in solve_for_x(pads[0], sequence, start):
     considers.append(s)
 
+  print('considers', len(considers))
+
+  out = []
   for s in considers:
     if len(pads) == 1:
-      yield s
+      # yield s
+      out.append(s)
     else:
       for t in get_shortest_n2(s, pads[1:]):
-        yield t
+        # yield t
+        out.append(t)
+  # print('ssss', len(pads), len(out), [len(x) for x in out], len(considers), [len(c) for c in considers])
+  return tuple(out)
 
 def shortestn2wrapper(sequence, pads):
   best = []
   bestlen = 10 ** 100
-  for x in get_shortest_n2(sequence, pads):
+  for x in get_shortest_n2(sequence, tuple(pads)):
     if len(x) < bestlen:
       best = x
       bestlen = len(x)
@@ -116,7 +133,7 @@ def main(raw, part):
   pads = [NUMPAD] + [DIRPAD] * 2
 
   if part == 2:
-    pads = [NUMPAD] + [DIRPAD] * 3
+    pads = [NUMPAD] + [DIRPAD] * 9
 
   for cmd in data:
     b = shortestn2wrapper(cmd, pads)
