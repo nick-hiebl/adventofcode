@@ -472,3 +472,6 @@ def mul_inv(a, b):
     x0, x1 = x1 - q * x0, x0
   if x1 < 0: x1 += b0
   return x1
+
+def manhattan(t1, t2):
+  return sum(abs(x-y) for x,y in zip(t1, t2))
