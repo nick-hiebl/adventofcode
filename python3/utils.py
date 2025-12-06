@@ -15,6 +15,12 @@ def readFileName(name):
 
   return lines
 
+def readFileName_nostrip(name):
+  with open(name, 'r') as f:
+    lines = [l for l in f.readlines()]
+
+  return lines
+
 def enumerateGrid(grid):
   for r,row in enumerate(grid):
     for c,val in enumerate(row):
