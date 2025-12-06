@@ -387,6 +387,12 @@ def grid_to_graph(grid, valid_move, allowDiag=True):
     lambda rc: [(rc2, 1) for _,rc2 in walkNeighbours(grid, *rc, allowDiag=allowDiag) if valid_move(rc, rc2)]
   )
 
+def weighted_grid_to_graph(grid, valid_move, weight, allowDiag=True):
+  return graph_maker(
+    [rc for _,rc,__ in enumerateGrid(grid)],
+    lambda rc: [(rc2, weight(rc, rc2)) for _,rc2 in walkNeighbours(grid, *rc, allowDiag=allowDiag) if valid_move(rc, rc2)]
+  )
+
 def wrapping_grid_to_graph(grid, check_chars, allowDiag):
   def edges_from(pos):
     r,c = pos
@@ -475,3 +481,6 @@ def mul_inv(a, b):
 
 def manhattan(t1, t2):
   return sum(abs(x-y) for x,y in zip(t1, t2))
+
+def string_replace_index(base, index, val):
+  return base[:index] + val + base[index+1:]
